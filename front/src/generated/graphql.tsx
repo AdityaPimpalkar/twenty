@@ -1023,6 +1023,7 @@ export type Mutation = {
   impersonate: Verify;
   renewToken: AuthTokens;
   signUp: LoginToken;
+  updateManyViewField: AffectedRows;
   updateOneActivity: Activity;
   updateOneCompany?: Maybe<Company>;
   updateOnePerson?: Maybe<Person>;
@@ -1216,6 +1217,12 @@ export type MutationSignUpArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   workspaceInviteHash?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationUpdateManyViewFieldArgs = {
+  data: ViewFieldUpdateManyMutationInput;
+  where?: InputMaybe<ViewFieldWhereInput>;
 };
 
 
@@ -2566,6 +2573,15 @@ export type ViewFieldUpdateInput = {
   view?: InputMaybe<ViewUpdateOneRequiredWithoutFieldsNestedInput>;
 };
 
+export type ViewFieldUpdateManyMutationInput = {
+  index?: InputMaybe<Scalars['Int']>;
+  isVisible?: InputMaybe<Scalars['Boolean']>;
+  key?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  objectId?: InputMaybe<Scalars['String']>;
+  size?: InputMaybe<Scalars['Int']>;
+};
+
 export type ViewFieldUpdateManyWithoutViewNestedInput = {
   connect?: InputMaybe<Array<ViewFieldWhereUniqueInput>>;
   disconnect?: InputMaybe<Array<ViewFieldWhereUniqueInput>>;
@@ -3521,6 +3537,14 @@ export type UpdateViewFieldMutationVariables = Exact<{
 
 
 export type UpdateViewFieldMutation = { __typename?: 'Mutation', updateOneViewField: { __typename?: 'ViewField', index: number, isVisible: boolean, key: string, name: string, size: number } };
+
+export type UpdateManyViewFieldMutationVariables = Exact<{
+  data: ViewFieldUpdateManyMutationInput;
+  where: ViewFieldWhereInput;
+}>;
+
+
+export type UpdateManyViewFieldMutation = { __typename?: 'Mutation', updateManyViewField: { __typename?: 'AffectedRows', count: number } };
 
 export type UpdateViewFilterMutationVariables = Exact<{
   data: ViewFilterUpdateInput;
@@ -6562,6 +6586,40 @@ export function useUpdateViewFieldMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateViewFieldMutationHookResult = ReturnType<typeof useUpdateViewFieldMutation>;
 export type UpdateViewFieldMutationResult = Apollo.MutationResult<UpdateViewFieldMutation>;
 export type UpdateViewFieldMutationOptions = Apollo.BaseMutationOptions<UpdateViewFieldMutation, UpdateViewFieldMutationVariables>;
+export const UpdateManyViewFieldDocument = gql`
+    mutation UpdateManyViewField($data: ViewFieldUpdateManyMutationInput!, $where: ViewFieldWhereInput!) {
+  updateManyViewField(data: $data, where: $where) {
+    count
+  }
+}
+    `;
+export type UpdateManyViewFieldMutationFn = Apollo.MutationFunction<UpdateManyViewFieldMutation, UpdateManyViewFieldMutationVariables>;
+
+/**
+ * __useUpdateManyViewFieldMutation__
+ *
+ * To run a mutation, you first call `useUpdateManyViewFieldMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateManyViewFieldMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateManyViewFieldMutation, { data, loading, error }] = useUpdateManyViewFieldMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useUpdateManyViewFieldMutation(baseOptions?: Apollo.MutationHookOptions<UpdateManyViewFieldMutation, UpdateManyViewFieldMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateManyViewFieldMutation, UpdateManyViewFieldMutationVariables>(UpdateManyViewFieldDocument, options);
+      }
+export type UpdateManyViewFieldMutationHookResult = ReturnType<typeof useUpdateManyViewFieldMutation>;
+export type UpdateManyViewFieldMutationResult = Apollo.MutationResult<UpdateManyViewFieldMutation>;
+export type UpdateManyViewFieldMutationOptions = Apollo.BaseMutationOptions<UpdateManyViewFieldMutation, UpdateManyViewFieldMutationVariables>;
 export const UpdateViewFilterDocument = gql`
     mutation UpdateViewFilter($data: ViewFilterUpdateInput!, $where: ViewFilterWhereUniqueInput!) {
   viewFilter: updateOneViewFilter(data: $data, where: $where) {
