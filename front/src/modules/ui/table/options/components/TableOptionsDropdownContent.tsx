@@ -20,6 +20,7 @@ import { sortsScopedState } from '@/ui/filter-n-sort/states/sortsScopedState';
 import {
   IconChevronLeft,
   IconFileImport,
+  IconGripVertical,
   IconMinus,
   IconPlus,
   IconTag,
@@ -88,6 +89,24 @@ export function TableOptionsDropdownContent({
   );
 
   const { handleColumnVisibilityChange } = useTableColumns();
+
+  const renderDragAction = useCallback(
+    (column: ColumnDefinition<ViewFieldMetadata>) =>
+      // Do not allow hiding last visible column
+      !column.isVisible || visibleTableColumns.length > 1
+        ? [
+            <IconGripVertical
+              key={`action-${column.key}`}
+              size={theme.icon.size.sm}
+            />,
+          ]
+        : undefined,
+    [
+      handleColumnVisibilityChange,
+      theme.icon.size.sm,
+      visibleTableColumns.length,
+    ],
+  );
 
   const renderFieldActions = useCallback(
     (column: ColumnDefinition<ViewFieldMetadata>) =>
@@ -257,6 +276,7 @@ export function TableOptionsDropdownContent({
           </DropdownMenuHeader>
           <StyledDropdownMenuSeparator />
           <TableOptionsDropdownSection
+            renderLeftActions={renderDragAction}
             renderActions={renderFieldActions}
             title="Visible"
             columns={visibleTableColumns}

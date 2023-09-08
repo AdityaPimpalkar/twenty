@@ -7,7 +7,10 @@ import { hoverBackground } from '@/ui/theme/constants/effects';
 
 export type DropdownMenuItemAccent = 'regular' | 'danger';
 
-const StyledItem = styled.li<{ accent: DropdownMenuItemAccent }>`
+const StyledItem = styled.li<{
+  accent: DropdownMenuItemAccent;
+  isDragging: boolean;
+}>`
   --horizontal-padding: ${({ theme }) => theme.spacing(1)};
   --vertical-padding: ${({ theme }) => theme.spacing(2)};
 
@@ -48,18 +51,27 @@ const StyledActions = styled(motion.div)`
 `;
 
 export type DropdownMenuItemProps = ComponentProps<'li'> & {
+  isDragging?: boolean;
+  leftActions?: React.ReactNode[] | null;
   actions?: React.ReactNode[];
   accent?: DropdownMenuItemAccent;
 };
 
 export function DropdownMenuItem({
+  isDragging,
+  leftActions,
   actions,
   children,
   accent = 'regular',
   ...props
 }: DropdownMenuItemProps) {
   return (
-    <StyledItem {...props} accent={accent}>
+    <StyledItem
+      {...props}
+      isDragging={isDragging ? true : false}
+      accent={accent}
+    >
+      {leftActions && leftActions}
       {children}
       {actions && (
         <StyledActions
