@@ -14,3 +14,14 @@ export const UPDATE_VIEW_FIELD = gql`
     }
   }
 `;
+
+export const UPDATE_MANY_VIEW_FIELD = gql`
+  mutation UpdateManyViewField(
+    $data: ViewFieldUpdateManyMutationInput!
+    $where: ViewFieldWhereInput!
+  ) {
+    updateManyViewField(data: $data, where: $where) {
+      count
+    }
+  }
+`;

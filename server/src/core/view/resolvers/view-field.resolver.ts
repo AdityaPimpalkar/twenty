@@ -26,6 +26,7 @@ import { UserAbility } from 'src/decorators/user-ability.decorator';
 import { AbilityGuard } from 'src/guards/ability.guard';
 import { JwtAuthGuard } from 'src/guards/jwt.auth.guard';
 import { CreateOneViewFieldArgs } from 'src/core/@generated/view-field/create-one-view-field.args';
+import { UpdateManyViewFieldArgs } from 'src/core/@generated/view-field/update-many-view-field.args';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => ViewField)
@@ -104,5 +105,17 @@ export class ViewFieldResolver {
       data: args.data,
       select: prismaSelect.value,
     } as Prisma.ViewFieldUpdateArgs);
+  }
+
+  @Mutation(() => AffectedRows)
+  @UseGuards(AbilityGuard)
+  @CheckAbilities(UpdateViewFieldAbilityHandler)
+  async updateManyViewField(
+    @Args() args: UpdateManyViewFieldArgs,
+  ): Promise<Prisma.BatchPayload> {
+    return this.viewFieldService.updateMany({
+      where: args.where,
+      data: args.data,
+    });
   }
 }
