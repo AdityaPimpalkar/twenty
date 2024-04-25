@@ -1,6 +1,6 @@
 import { createDefaultButton } from '~/contentScript/createButton';
-import extractCompanyLinkedinLink from '~/contentScript/utils/extractCompanyLinkedinLink';
-import extractDomain from '~/contentScript/utils/extractDomain';
+import { getCompanyLinkedinLink } from '~/contentScript/linkedin/company/utils/getCompanyLinkedinLink';
+import extractDomain from '~/utils/extractDomain';
 import { createCompany, fetchCompany } from '~/db/company.db';
 import { CompanyInput } from '~/db/types/company.types';
 import { isDefined } from '~/utils/isDefined';
@@ -10,7 +10,7 @@ export const checkIfCompanyExists = async () => {
     action: 'getActiveTab',
   });
 
-  const companyURL = extractCompanyLinkedinLink(activeTab.url);
+  const companyURL = getCompanyLinkedinLink(activeTab.url);
 
   return await fetchCompany({
     linkedinLink: {
@@ -68,7 +68,7 @@ export const addCompany = async () => {
   });
 
   // Convert URLs like https://www.linkedin.com/company/twenty/about/ to https://www.linkedin.com/company/twenty
-  const companyURL = extractCompanyLinkedinLink(activeTab.url);
+  const companyURL = getCompanyLinkedinLink(activeTab.url);
   companyInputData.linkedinLink = { url: companyURL, label: companyURL };
 
   const company = await createCompany(companyInputData);

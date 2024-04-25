@@ -3,7 +3,7 @@
 import { isDefined } from '~/utils/isDefined';
 
 // "https://www.linkedin.com/company/twenty/" "https://www.linkedin.com/company/twenty/about/" "https://www.linkedin.com/company/twenty/people/".
-const extractCompanyLinkedinLink = (activeTabUrl: string) => {
+export const getCompanyLinkedinLink = (activeTabUrl: string) => {
   // Regular expression to match the company ID
   const regex = /\/company\/([^/]*)/;
 
@@ -19,4 +19,3 @@ const extractCompanyLinkedinLink = (activeTabUrl: string) => {
   return '';
 };
 
-export default extractCompanyLinkedinLink;

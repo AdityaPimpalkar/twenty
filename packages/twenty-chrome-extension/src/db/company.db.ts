@@ -4,8 +4,8 @@ import {
   FindCompanyResponse,
 } from '~/db/types/company.types';
 import { Company, CompanyFilterInput } from '~/generated/graphql';
-import { CREATE_COMPANY } from '~/graphql/company/mutations';
-import { FIND_COMPANY } from '~/graphql/company/queries';
+import { CREATE_COMPANY } from '~/graphql/company/mutations/createCompany';
+import { FIND_MANY_COMPANIES } from '~/graphql/company/queries/findManyCompanies';
 import { isDefined } from '~/utils/isDefined';
 
 import { callMutation, callQuery } from '../utils/requestDb';
@@ -14,7 +14,7 @@ export const fetchCompany = async (
   companyfilerInput: CompanyFilterInput,
 ): Promise<Company | null> => {
   try {
-    const data = await callQuery<FindCompanyResponse>(FIND_COMPANY, {
+    const data = await callQuery<FindCompanyResponse>(FIND_MANY_COMPANIES, {
       filter: {
         ...companyfilerInput,
       },

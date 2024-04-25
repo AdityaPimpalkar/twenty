@@ -1,5 +1,5 @@
 import { createDefaultButton } from '~/contentScript/createButton';
-import extractFirstAndLastName from '~/contentScript/utils/extractFirstAndLastName';
+import { getFirstAndLastName } from '~/contentScript/linkedin/person/utils/getFirstAndLastName';
 import { createPerson, fetchPerson } from '~/db/person.db';
 import { PersonInput } from '~/db/types/person.types';
 import { isDefined } from '~/utils/isDefined';
@@ -17,7 +17,7 @@ export const checkIfPersonExists = async () => {
   const personNameElement = document.querySelector('.text-heading-xlarge');
   const personName = personNameElement ? personNameElement.textContent : '';
 
-  const { firstName, lastName } = extractFirstAndLastName(String(personName));
+  const { firstName, lastName } = getFirstAndLastName(String(personName));
   const person = await fetchPerson({
     name: {
       firstName: { eq: firstName },
@@ -58,7 +58,7 @@ export const addPerson = async () => {
     : '';
   const jobTitle = ariaHiddenSpan ? ariaHiddenSpan.textContent?.trim() : '';
 
-  const { firstName, lastName } = extractFirstAndLastName(String(personName));
+  const { firstName, lastName } = getFirstAndLastName(String(personName));
 
   // Prepare person data to send to the backend.
   const personData: PersonInput = {

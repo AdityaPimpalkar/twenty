@@ -4,8 +4,8 @@ import {
   PersonInput,
 } from '~/db/types/person.types';
 import { Person, PersonFilterInput } from '~/generated/graphql';
-import { CREATE_PERSON } from '~/graphql/person/mutations';
-import { FIND_PERSON } from '~/graphql/person/queries';
+import { CREATE_PERSON } from '~/graphql/person/mutations/createPerson';
+import { FIND_MANY_PEOPLE } from '~/graphql/person/queries/findManyPeople';
 import { isDefined } from '~/utils/isDefined';
 
 import { callMutation, callQuery } from '../utils/requestDb';
@@ -14,7 +14,7 @@ export const fetchPerson = async (
   personFilterData: PersonFilterInput,
 ): Promise<Person | null> => {
   try {
-    const data = await callQuery<FindPersonResponse>(FIND_PERSON, {
+    const data = await callQuery<FindPersonResponse>(FIND_MANY_PEOPLE, {
       filter: {
         ...personFilterData,
       },

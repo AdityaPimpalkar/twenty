@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const FIND_COMPANY = gql`
-  query FindCompany($filter: CompanyFilterInput!) {
+export const FIND_MANY_COMPANIES = gql`
+  query FindManyCompanies($filter: CompanyFilterInput!) {
     companies(filter: $filter) {
       edges {
         node {

@@ -1,5 +1,5 @@
-import { insertButtonForCompany } from '~/contentScript/extractCompanyProfile';
-import { insertButtonForPerson } from '~/contentScript/extractPersonProfile';
+import { insertButtonForCompany } from '~/contentScript/linkedin/company/extractCompanyProfile';
+import { insertButtonForPerson } from '~/contentScript/linkedin/person/extractPersonProfile';
 
 // Inject buttons into the DOM when SPA is reloaded on the resource url.
 // e.g. reload the page when on https://www.linkedin.com/in/mabdullahabaid/
